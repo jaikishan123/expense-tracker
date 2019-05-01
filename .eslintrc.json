@@ -20,6 +20,7 @@
     "ecmaVersion": 2018
   },
   "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true }],
     "node/exports-style": ["error", "module.exports"],
     "node/prefer-global/buffer": ["error", "always"],
     "node/prefer-global/console": ["error", "always"],
