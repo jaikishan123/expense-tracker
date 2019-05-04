@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const debug = require('debug')('expense-tracker:mongoose');
+const util = require('util');
 const config = require('./config');
 
 mongoose.Promise = global.Promise;
@@ -9,6 +11,13 @@ const db = mongoose.connect;
 db.on('error', () => {
   throw new Error('cannot connect to mongodb');
 });
+
+// print mongoose logs in dev env
+if (config.mongooseDebug) {
+  mongoose.set('debug', (collectionName, method, query, doc) => {
+    debug(`${collectionName}.${method}`, util.inspect(query, false, 15), doc);
+  });
+}
 
 mongoose.connect(mongoUri, { keepAlive: true });
 
