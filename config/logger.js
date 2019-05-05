@@ -26,4 +26,8 @@ const logger = createLogger({
   exitOnError: true
 });
 
+// log unhandeled promise rejection
+process.on('unhandledRejection', reason => {
+  logger.warn(reason);
+});
 module.export = logger;
