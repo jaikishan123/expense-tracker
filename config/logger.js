@@ -28,6 +28,6 @@ const logger = createLogger({
 
 // log unhandeled promise rejection
 process.on('unhandledRejection', reason => {
-  logger.warn(reason);
+  logger.warn('unhandeled rejection at :', reason);
 });
 module.export = logger;
