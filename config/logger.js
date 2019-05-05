@@ -1,4 +1,5 @@
 const { createLogger, format, transports } = require('winston');
+const config = require('./config.js');
 
 const logger = createLogger({
   level: 'info',
@@ -29,4 +30,11 @@ const logger = createLogger({
 // If we're not in production then **ALSO** log to the `console`
 // with the colorized simple format.
 //
+if (config.env !== 'production') {
+  logger.add(
+    new transports.Console({
+      format: format.combine(format.colorize(), format.simple())
+    })
+  );
+}
 module.export = logger;
