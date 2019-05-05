@@ -9,7 +9,7 @@ mongoose.Promise = global.Promise;
 const mongoUri = config.mongo.host;
 const db = mongoose.connect;
 db.on('error', () => {
-  throw new Error('cannot connect to mongodb');
+  throw new Error('Error occured in mongodb connection');
 });
 
 // print mongoose logs in dev env
