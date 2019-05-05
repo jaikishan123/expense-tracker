@@ -6,6 +6,8 @@ const logger = createLogger({
     format.timestamp({
       format: 'YYYY-MM-DD HH:mm:ss:SSS'
     }),
+    format.errors({ stack: true }),
+    format.splat(),
     format.json()
   ),
   transports: [
@@ -23,5 +25,8 @@ const logger = createLogger({
   // If false, handled exceptions will not cause process.exit
   exitOnError: true
 });
-
+//
+// If we're not in production then **ALSO** log to the `console`
+// with the colorized simple format.
+//
 module.export = logger;
