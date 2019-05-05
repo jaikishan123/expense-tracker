@@ -15,7 +15,13 @@ const logger = createLogger({
     //
     new transports.File({ filename: 'error.log', level: 'error' }),
     new transports.File({ filename: 'combined.log' })
-  ]
+  ],
+  exceptionHandlers: [
+    // - Write to all unCaughtExceptions to `unCaughtExceptions.log`
+    new transports.File({ filename: 'unCaughtExceptions.log' })
+  ],
+  // If false, handled exceptions will not cause process.exit
+  exitOnError: true
 });
 
 module.export = logger;
