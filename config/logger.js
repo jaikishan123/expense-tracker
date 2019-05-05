@@ -1,5 +1,13 @@
-const winston = require('winston');
+const { createLogger, format } = require('winston');
 
-const logger = winston.createLogger();
+const logger = createLogger({
+  level: 'info',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss:SSS'
+    }),
+    format.json()
+  )
+});
 
-module.exports = logger;
+module.export = logger;
