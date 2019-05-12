@@ -19,6 +19,7 @@ if (config.mongooseDebug) {
   });
 }
 
-mongoose.connect(mongoUri, { keepAlive: true });
-
-module.exports = db;
+module.exports.connect = () => {
+  mongoose.connect(mongoUri, { keepAlive: true });
+  return mongoose.connect;
+};
