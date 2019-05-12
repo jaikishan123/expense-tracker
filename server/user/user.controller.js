@@ -12,5 +12,22 @@ function list(req, res, next) {
     .then(users => res.json(users))
     .catch(e => next(e));
 }
+/**
+ * Create new user
+ * @property {string} req.body.username - The username of user.
+ * @property {string} req.body.mobileNumber - The mobileNumber of user.
+ * @returns {User}
+ */
+function create(req, res, next) {
+  const user = new User({
+    username: req.body.username,
+    mobileNumber: req.body.mobileNumber
+  });
 
-module.exports = { list };
+  user
+    .save()
+    .then(savedUser => res.json(savedUser))
+    .catch(e => next(e));
+}
+
+module.exports = { list, create };
