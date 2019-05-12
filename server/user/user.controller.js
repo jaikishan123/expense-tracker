@@ -49,14 +49,15 @@ function create(req, res, next) {
 }
 
 /**
- * Update existing user
+ * Replace existing user
  * @property {string} req.body.username - The username of user.
  * @property {string} req.body.password - The password of user.
  * @returns {User}
  */
-function update(req, res, next) {
-  const updatedUser = req.body;
-  const user = Object.assign(req.user, updatedUser);
+function replace(req, res, next) {
+  const { user } = req;
+  user.username = req.body.username;
+  user.password = req.body.password;
 
   user
     .save()
@@ -64,4 +65,14 @@ function update(req, res, next) {
     .catch(e => next(e));
 }
 
-module.exports = { list, create, load, get, update };
+function remove(req, res, next) {
+  const { user } = req;
+
+  // TODO: Remove all the expenses made by the user when a user is deleted
+  user
+    .remove()
+    .then(deletedUser => res.json(deletedUser))
+    .catch(e => next(e));
+}
+
+module.exports = { list, create, load, get, replace, remove };
