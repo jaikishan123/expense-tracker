@@ -21,5 +21,10 @@ router
   /** GET /api/users/:userId - Get user */
   .get(userCtrl.get)
 
-  /** PUT /api/users/:userId - Update user */
-  .put(validate(validation.updateUser), userCtrl.update);
+  /** PUT /api/users/:userId - Replace user */
+  .put(validate(validation.updateUser), userCtrl.replace)
+
+  /** DELETE /api/users/:userId - Delete user */
+  .delete(userCtrl.remove);
+
+module.exports = router;
