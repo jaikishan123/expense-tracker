@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const httpStatus = require('http-status');
+const APIError = require('../utils/APIErrors.js');
 
 const SALT_WORK_FACTOR = 10;
 /**
@@ -47,6 +49,22 @@ UserSchema.statics = {
       .skip(+skip)
       .limit(+limit)
       .exec();
+  },
+  /**
+   * Get user
+   * @param {ObjectId} id - The objectId of user.
+   * @returns {Promise<User, APIError>}
+   */
+  get(id) {
+    return this.findById(id)
+      .exec()
+      .then(user => {
+        if (user) {
+          return user;
+        }
+        const err = new APIError('No such user exists!', httpStatus.NOT_FOUND);
+        return Promise.reject(err);
+      });
   }
 };
 module.exports = mongoose.model('User', UserSchema);
