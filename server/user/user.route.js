@@ -19,4 +19,7 @@ router
 router
   .route('/:userId')
   /** GET /api/users/:userId - Get user */
-  .get(userCtrl.get);
+  .get(userCtrl.get)
+
+  /** PUT /api/users/:userId - Update user */
+  .put(validate(validation.updateUser), userCtrl.update);
