@@ -15,3 +15,8 @@ router
   .get(userCtrl.list)
   /** POST /api/users - Create new user */
   .post(validate(validation.createUser), userCtrl.create);
+
+router
+  .route('/:userId')
+  /** GET /api/users/:userId - Get user */
+  .get(userCtrl.get);
