@@ -30,4 +30,23 @@ UserSchema.pre('save', function hashPassword(next) {
   return next();
 });
 
+/**
+ * Statics
+ */
+
+UserSchema.statics = {
+  /**
+   * List users in descending order of 'createdAt' timestamp.
+   * @param {number} skip - Number of users to be skipped.
+   * @param {number} limit - Limit number of users to be returned.
+   * @returns {Promise<User[]>}
+   */
+  list({ skip = 0, limit = 30 } = {}) {
+    return this.find()
+      .sort({ createdAt: -1 })
+      .skip(+skip)
+      .limit(+limit)
+      .exec();
+  }
+};
 module.exports = mongoose.model('User', UserSchema);
