@@ -7,11 +7,11 @@ module.exports = {
       username: Joi.string().required(),
       password: Joi.string().required()
     }
-  }, // UPDATE /api/users/:userId
-  updateUser: {
+  }, // Replace /api/users/:userId
+  replaceUser: {
     body: {
-      username: Joi.string(),
-      password: Joi.string()
+      username: Joi.string().required(),
+      password: Joi.string().required()
     },
     params: {
       userId: Joi.string()

@@ -22,7 +22,7 @@ router
   .get(userCtrl.get)
 
   /** PUT /api/users/:userId - Replace user */
-  .put(validate(validation.updateUser), userCtrl.replace)
+  .put(validate(validation.replaceUser), userCtrl.replace)
 
   /** DELETE /api/users/:userId - Delete user */
   .delete(userCtrl.remove);
