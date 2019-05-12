@@ -5,7 +5,7 @@ const User = require('./user.model');
 function load(req, res, next, id) {
   User.get(id)
     .then(user => {
-      req.user = user; // eslint-disable-line no-param-reassign
+      req.user = user;
       return next();
     })
     .catch(e => next(e));
@@ -33,13 +33,13 @@ function list(req, res, next) {
 /**
  * Create new user
  * @property {string} req.body.username - The username of user.
- * @property {string} req.body.mobileNumber - The mobileNumber of user.
+ * @property {string} req.body.password - The password of user.
  * @returns {User}
  */
 function create(req, res, next) {
   const user = new User({
     username: req.body.username,
-    mobileNumber: req.body.mobileNumber
+    password: req.body.password
   });
 
   user
@@ -48,4 +48,20 @@ function create(req, res, next) {
     .catch(e => next(e));
 }
 
-module.exports = { list, create, load, get };
+/**
+ * Update existing user
+ * @property {string} req.body.username - The username of user.
+ * @property {string} req.body.password - The password of user.
+ * @returns {User}
+ */
+function update(req, res, next) {
+  const updatedUser = req.body;
+  const user = Object.assign(req.user, updatedUser);
+
+  user
+    .save()
+    .then(savedUser => res.json(savedUser))
+    .catch(e => next(e));
+}
+
+module.exports = { list, create, load, get, update };
