@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
  * - pre-save hooks
  */
 
-// The following pre-save hook will hash the user password before saving
+// The following pre-save hook will hash the user password before saving to mongodb
 UserSchema.pre('save', function hashPassword(next) {
   if (!this.isModified('password')) return next();
   bcrypt
