@@ -12,6 +12,17 @@ const router = express.Router();
 router.param('expenseId', expenseCtrl.load);
 
 router
+  .route('/')
+  /** GET /api/users/:userId/expenses/ - Get list of expenses of a user */
+  .get(authenticate.authenticateUser, expenseCtrl.get)
+  /** POST /api/users/:userId/expenses - Create new expense for a user */
+  .post(
+    authenticate.authenticateUser,
+    validate(validation.createExpense),
+    expenseCtrl.post
+  );
+
+router
   .route('/:expenseId')
   /** GET /api/users/:userId/expenses/:expenseId - Get expense of a user */
   .get(authenticate.authenticateUser, expenseCtrl.getOne)
