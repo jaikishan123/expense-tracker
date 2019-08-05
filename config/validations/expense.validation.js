@@ -6,7 +6,9 @@ module.exports = {
     body: {
       amount: Joi.string().required(),
       category: Joi.string().required(),
-      type: Joi.string().required()
+      type: Joi.string()
+        .valid('income', 'expense')
+        .required()
     },
     params: {
       userId: Joi.string()
@@ -25,7 +27,9 @@ module.exports = {
         .required(),
       amount: Joi.string().required(),
       category: Joi.string().required(),
-      type: Joi.string().required()
+      type: Joi.string()
+        .valid('expense', 'income')
+        .required()
     },
     params: {
       userId: Joi.string()
