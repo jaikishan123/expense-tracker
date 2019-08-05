@@ -4,7 +4,6 @@ module.exports = {
   // POST /api/users/:userId/expenses/:expenseId
   replaceExpense: {
     body: {
-      userId: Joi.string().required(),
       amount: Joi.string().required(),
       category: Joi.string().required(),
       type: Joi.string().required()
