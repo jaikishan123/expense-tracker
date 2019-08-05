@@ -16,5 +16,21 @@ module.exports = {
         .hex()
         .required()
     }
+  },
+  createExpense: {
+    body: {
+      userId: Joi.string()
+        .hex()
+        .valid(Joi.ref('$params.userId'))
+        .required(),
+      amount: Joi.string().required(),
+      category: Joi.string().required(),
+      type: Joi.string().required()
+    },
+    params: {
+      userId: Joi.string()
+        .hex()
+        .required()
+    }
   }
 };
