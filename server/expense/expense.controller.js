@@ -48,5 +48,35 @@ function remove(req, res, next) {
     .then(deletedExpense => res.json(deletedExpense))
     .catch(e => next(e));
 }
+/**
+ * Returns list of expenses of a user
+ * @returns {Expense}
+ */
+function get(req, res, next) {
+  Expense.find({ userId: req.params.userId })
+    .sort({ date: -1 })
+    .exec.then(expenses => {
+      res.json(expenses);
+    })
+    .catch(err => next(err));
+}
 
-module.exports = { load, getOne, replace, remove };
+/**
+ * Create new expense for a user
+ * @property {string} req.body.amount - The amount of the expense.
+ * @property {string} req.body.category - The category of the expense.
+ * @property {string} req.body.type - The typle of the expense.
+ * @returns {Expense}
+ */
+function post(req, res, next) {
+  const newExpense = req.body;
+  newExpense.userId = req.params.userId;
+
+  const expense = new Expense(newExpense);
+
+  expense
+    .save()
+    .then(savedExpense => res.json(savedExpense))
+    .catch(e => next(e));
+}
+module.exports = { load, getOne, replace, remove, get, post };
