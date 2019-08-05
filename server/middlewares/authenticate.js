@@ -19,6 +19,14 @@ function authenticateUser(req, res, next) {
 
       // Let's pass back the decoded token to the request object
       req.decoded = result;
+      if (req.decoded.id !== req.params.userId) {
+        const error = new APIError(
+          'User unaothorized',
+          httpStatus.UNAUTHORIZED,
+          true
+        );
+        return next(error);
+      }
       // We call next to pass execution to the subsequent middleware
       next();
     } catch (err) {
