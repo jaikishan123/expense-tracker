@@ -53,8 +53,11 @@ function remove(req, res, next) {
  * @returns {Expense}
  */
 function get(req, res, next) {
+  const { limit = 50, skip = 0 } = req.query;
   Expense.find({ userId: req.params.userId })
     .sort({ date: -1 })
+    .skip(+skip)
+    .limit(+limit)
     .exec.then(expenses => {
       res.json(expenses);
     })
