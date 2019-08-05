@@ -26,7 +26,7 @@ const ExpenseSchema = new mongoose.Schema({
     enum: ['expense', 'income'],
     required: true
   },
-  user: {
+  userId: {
     type: mongoose.schema.Types.ObjectId,
     ref: 'User',
     required: true
