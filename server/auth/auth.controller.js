@@ -12,11 +12,14 @@ const config = require('../../config/config');
  * @returns {token, username: req.body.username} - A json containing token and username
  */
 function login(req, res, next) {
+  const userObject = {};
   userModel
     .findOne({ username: req.body.username })
     .exec()
     .then(user => {
       if (user) {
+        userObject.username = user.username;
+        userObject.id = user._id; // eslint-disable-line no-underscore-dangle
         return bcrypt.compare(req.bod.password, user.password);
       }
       const error = new APIError(
@@ -28,11 +31,9 @@ function login(req, res, next) {
     })
     .then(response => {
       if (response) {
-        const token = jwt.sign(
-          { username: req.body.username },
-          config.jwtSecret,
-          { expiresIn: '24h' }
-        );
+        const token = jwt.sign(userObject, config.jwtSecret, {
+          expiresIn: '24h'
+        });
         return res.json({ token, username: req.body.username });
       }
       const error = new APIError(
